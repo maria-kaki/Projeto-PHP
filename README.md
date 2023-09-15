@@ -4,6 +4,7 @@
 Um sistema de pagamento que permite aos usuários realizarem transações financeiras, como compra de produtos ou serviços, utilizando uma API de pagamento (PayPal)
 
 ## Recursos e Funcionalidades
+
 ### Autenticação de Usuários
 Os usuários podem se cadastrar e fazer login em suas contas.
 
@@ -27,12 +28,18 @@ Há autenticação segura, proteção contra injeções de SQL, criptografia e p
 
 ## Tecnologias e SDKs Utilizados
 Utilização de PHP no backend.
+
 Utilização de HTML, CSS e JavaScript no frontend.
+
 SDK da API de pagamento -> PayPal SDK.
 
 ## Benefícios do Projeto:
 Demonstração de habilidades de integração de API.
+
 Demonstração de segurança em transações financeiras.
+
 Demonstração de segurança com o usuário ao fazer criptografia para salvar no banco de dados.
+
 Boa prática em gerenciamento de contas de usuário e registros de transações.
+
 Experiência com tecnologias populares de pagamento online.
