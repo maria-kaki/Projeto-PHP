@@ -74,3 +74,12 @@ function formatDateWithLocale($date, $pattern) {
     $time = getDateAsDateTime($date)->getTimestamp();
     return strftime($pattern, $time);
 }
+
+function formatDateWithLocale1($date, $pattern, $locale) {
+    $timestamp = strtotime($date); // Converter a data para um timestamp Unix
+    if ($timestamp === false) {
+        return false; // Lidar com erros na conversão da data
+    }
+    setlocale(LC_TIME, $locale); // Configurar a localização desejada
+    return date($pattern, $timestamp); // Formatar a data usando a localização
+}
