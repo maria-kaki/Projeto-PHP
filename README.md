@@ -31,7 +31,9 @@ Utilização de PHP no backend.
 
 Utilização de HTML, CSS e JavaScript no frontend.
 
-SDK da API de pagamento -> PayPal SDK.
+Utilização de PayPal SDK para a API de pagamento.
+
+Utilização de MySQL para o banco de dados.
 
 ## Benefícios do Projeto:
 Demonstração de habilidades de integração de API.
