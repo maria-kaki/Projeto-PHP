@@ -19,6 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $row = $result->fetch_assoc();
             if (password_verify($password, $row["password"])) {
                 // Credenciais corretas, iniciar sessão
+                session_start(); // Inicia a sessão se ainda não estiver iniciada
                 $_SESSION["user_id"] = $row["user_id"];
                 $_SESSION["username"] = $row["username"];
                 header("Location: dashboard.php");
@@ -35,60 +36,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="PROJETO/Style/style.css">
+    <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
-    <div class="box-login">
-    <h1 class="title_login"><i class="icon icon-key-1"></i> Login</h1>
-
-    <form action="#" method="post" class="form login">
-
-        <div class="form_field">
-        
-            <label for="login__username">
-                <i class="icon icon-user-1"></i>
-                <span class="hidden">E-mail</span>
-            </label>
-            
-            <input autocomplete="off" id="login_username" type="text" name="email" class="form_input" placeholder="E-mail" required>
-
-        </div>
-
-        <div class="form_field">
-        
-            <label for="login_password">
-
-                <i class="icon icon-lock"></i>
-                <span class="hidden">Senha</span>
-            
-            </label>
-        
-            <input id="login_password" type="password" name="password" class="form_input" placeholder="Password" required>
-    
-        </div>
-
-        <div class="form_field">
-            <input type="submit" value="Entrar">
-        </div>
-
-    </form>
-
-    <p class="resgatar-senha">Resgatar Senha, 
-
-        <a href="#">Agora </a> 
-
-    </p>
-
-    </div><!--Box Login-->
-        <form method="post" action="login.php">
-            Email: <input type="email" name="email"><br>
-            Senha: <input type="password" name="password"><br>
-            <input type="submit" value="Login">
+    <div class="page">
+        <form method="POST" class="formLogin">
+            <h1>Login</h1>
+            <p>Digite os seus dados de acesso nos campos abaixo.</p>
+            <input type="email" name="email" placeholder="Digite seu e-mail" autofocus="true" />
+            <input type="password" name="password" placeholder="Digite sua senha" />
+            <a href="/">Esqueci minha senha</a>
+            <input type="submit" value="Acessar" class="btn" />
         </form>
+    </div>
 </body>
 </html>
