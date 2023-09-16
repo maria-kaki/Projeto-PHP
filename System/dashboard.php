@@ -8,9 +8,24 @@ if (!isset($_SESSION["user_id"])) {
 }
 
 // Recuperar informações do usuário e saldo da carteira
+$user_id = $_SESSION["user_id"];
 
-// Exibir informações e permitir processamento de transações
+// Implemente a lógica para recuperar as informações do usuário e o saldo da carteira do banco de dados
 
+// Exemplo de consulta ao banco de dados para recuperar o nome do usuário e o saldo da carteira
+$stmt = $conn->prepare("SELECT username, balance FROM users WHERE user_id = ?");
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows === 1) {
+    $row = $result->fetch_assoc();
+    $username = $row["username"];
+    $balance = $row["balance"];
+} else {
+    // Lida com o caso em que o usuário não é encontrado
+    // Você pode redirecionar para uma página de erro ou tomar outra ação apropriada
+}
 ?>
 
 <!DOCTYPE html>
@@ -20,10 +35,9 @@ if (!isset($_SESSION["user_id"])) {
 </head>
 <body>
     <h1>Painel de Controle</h1>
-    <p>Bem-vindo, [Nome do Usuário]!</p>
-    <p>Saldo da Carteira: $[Saldo da Carteira]</p>
+    <p>Bem-vindo, <?php echo $username; ?>!</p>
+    <p>Saldo da Carteira: $<?php echo $balance; ?></p>
     <!-- Adicione aqui a lógica e formulários para processamento de transações -->
     <p><a href="logout.php">Sair</a></p>
 </body>
 </html>
-

@@ -28,22 +28,67 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         } else {
             echo "E-mail não encontrado.";
+            header("Location: register.php");
+            exit;
         }
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="PROJETO/Style/style.css">
 </head>
 <body>
-    <h1>Login</h1>
-    <form method="post" action="login.php">
-        Email: <input type="email" name="email"><br>
-        Senha: <input type="password" name="password"><br>
-        <input type="submit" value="Login">
+    <div class="box-login">
+    <h1 class="title_login"><i class="icon icon-key-1"></i> Login</h1>
+
+    <form action="#" method="post" class="form login">
+
+        <div class="form_field">
+        
+            <label for="login__username">
+                <i class="icon icon-user-1"></i>
+                <span class="hidden">E-mail</span>
+            </label>
+            
+            <input autocomplete="off" id="login_username" type="text" name="email" class="form_input" placeholder="E-mail" required>
+
+        </div>
+
+        <div class="form_field">
+        
+            <label for="login_password">
+
+                <i class="icon icon-lock"></i>
+                <span class="hidden">Senha</span>
+            
+            </label>
+        
+            <input id="login_password" type="password" name="password" class="form_input" placeholder="Password" required>
+    
+        </div>
+
+        <div class="form_field">
+            <input type="submit" value="Entrar">
+        </div>
+
     </form>
+
+    <p class="resgatar-senha">Resgatar Senha, 
+
+        <a href="#">Agora </a> 
+
+    </p>
+
+    </div><!--Box Login-->
+        <form method="post" action="login.php">
+            Email: <input type="email" name="email"><br>
+            Senha: <input type="password" name="password"><br>
+            <input type="submit" value="Login">
+        </form>
 </body>
 </html>
