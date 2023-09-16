@@ -26,14 +26,9 @@ CREATE TABLE payments (
     payment_id INT AUTO_INCREMENT PRIMARY KEY,
     transaction_id INT NOT NULL,
     payment_status ENUM('Pending Payment', 'Paid', 'Payment Failed') NOT NULL,
-    paypal_payment_id VARCHAR(100) UNIQUE NOT NULL,  -- PayPal payment ID
-    paypal_token VARCHAR(100) NOT NULL,  -- PayPal payment token
-    paypal_payer_id VARCHAR(100) NOT NULL,  -- PayPal payer ID
-    payment_date TIMESTAMP,  -- Payment date/time
+    paypal_payment_id VARCHAR(100) UNIQUE NOT NULL,
+    paypal_token VARCHAR(100) NOT NULL,
+    paypal_payer_id VARCHAR(100) NOT NULL,
+    payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (transaction_id) REFERENCES transactions(transaction_id)
 );
-
-CREATE TABLE verification(
-    verificationid INT AUTO_INCREMENT PRIMARY KEY,
-    verificationcode INT NOT NULL,
-)

@@ -4,10 +4,11 @@ require_once("config.php");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["name"];
     $email = $_POST["email"];
+    $clientid = $_POST["clientid"];
     $password = password_hash($_POST["password"], PASSWORD_BCRYPT); // Armazenar a senha de forma segura com criptografia
 
     // Validação dos dados de entrada
-    if (empty($name) || empty($email) || empty($_POST["password"])) {
+    if (empty($name) || empty($email) || empty($_POST["password"]) || empty($clientid)) {
         echo "Por favor, preencha todos os campos.";
     } else {
         // Verifica se o email já está registrado
@@ -58,6 +59,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="email" name="email" placeholder="Digite seu e-mail" autofocus="true" />
             <label for="password">Senha</label>
             <input type="password" name="password" placeholder="Digite sua senha" />
+            <label for="clientid" class="form_label">ID do cliente</label>
+            <input type="text" name="secretkey" class="form_input" id="secretkey" placeholder="Chave secreta" required>
             <input type="submit" value="Registrar" class="btn" />
             <div class="login-button">
                 <p>Já tem uma conta? <a href="login.php">Faça login aqui</a></p>
