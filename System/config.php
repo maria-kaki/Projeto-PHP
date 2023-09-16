@@ -1,15 +1,9 @@
-Arquivo de configuração do banco de dados e API de pagamento.
-
 <?php
 // Configurações do banco de dados
-$db_host = "localhost";
+$db_host = "127.0.0.1:3306";
 $db_username = "root";
 $db_password = "root";
-$db_name = "PaymentSystem";
-
-// Configurações da API de pagamento
-$api_key = "APIkey";
-$api_secret = "APIsecret";
+$db_name = "paymentsystem";
 
 // Conexão com o banco de dados
 $conn = new mysqli($db_host, $db_username, $db_password, $db_name);

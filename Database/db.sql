@@ -1,6 +1,6 @@
 -- Create Schema
-CREATE DATABASE PaymentSystem;
-USE PaymentSystem;
+CREATE DATABASE paymentsystem;
+USE paymentsystem;
 
 -- Users Table
 CREATE TABLE users (
