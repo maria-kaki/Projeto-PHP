@@ -1,18 +1,28 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["enviar"])) {
+        // Botão de envio foi clicado, validateemail.php
+        header("Location: validateemail.php");
+        exit;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/index.css">
     <title>Esqueceu a Senha</title>
 </head>
 <body>
-    <h1>Esqueceu a Senha</h1>
-    <p>Informe seu endereço de e-mail para redefinir sua senha.</p>
-    <form action="send_reset_email.php" method="post">
-        <label for="email">E-mail:</label>
-        <input type="email" name="email" required>
-        <button type="submit">Enviar E-mail de Redefinição de Senha</button>
-    </form>
+    <div class="page">
+        <form method="POST" class="formIndex">
+            <h1>Esqueceu a Senha</h1>
+            <p>Informe seu endereço de e-mail para redefinir sua senha.</p>
+            <label for="email">E-mail:</label>
+            <input type="email" name="email" required>
+            <input type="submit" name="enviar" value="Enviar" class="btn">
+        </form>
+    </div>
 </body>
 </html>

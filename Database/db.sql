@@ -32,3 +32,8 @@ CREATE TABLE payments (
     payment_date TIMESTAMP,  -- Payment date/time
     FOREIGN KEY (transaction_id) REFERENCES transactions(transaction_id)
 );
+
+CREATE TABLE verification(
+    verificationid INT AUTO_INCREMENT PRIMARY KEY,
+    verificationcode INT NOT NULL,
+)

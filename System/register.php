@@ -3,11 +3,11 @@ require_once("config.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["name"];
-    $email = $_POST["email"];
+    $email = password_hash($_POST["email"], PASSWORD_BCRYPT);
     $password = password_hash($_POST["password"], PASSWORD_BCRYPT); // Armazenar a senha de forma segura com criptografia
 
     // Validação dos dados de entrada
-    if (empty($name) || empty($email) || empty($_POST["password"])) {
+    if (empty($name) || empty($_POST["email"]) || empty($_POST["password"]) || empty($name)) {
         echo "Por favor, preencha todos os campos.";
     } else {
         // Verifica se o email já está registrado
@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION["username"] = $name; // Define o nome de usuário na sessão
 
                 // Redireciona para a página de dashboard
-                header("Location: dashboard.php");
+                header("Location: send_reset_email.php");
                 exit;
             } else {
                 echo "Erro ao registrar usuário.";
@@ -45,11 +45,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Usuário</title>
-    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/index.css">
 </head>
 <body>
     <div class="page">
-        <form method="POST" class="formLogin">
+        <form method="POST" class="formIndex" action="send_reset_email.php">
             <h1>Registrar</h1>
             <p>Digite os seus dados de acesso para cadastro nos campos abaixo.</p>
             <label for="name" class="form_label">Nome</label>

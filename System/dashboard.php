@@ -31,13 +31,19 @@ if ($result->num_rows === 1) {
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="style/index.css">
     <title>Dashboard</title>
 </head>
 <body>
-    <h1>Painel de Controle</h1>
-    <p>Bem-vindo, <?php echo $username; ?>!</p>
-    <p>Saldo da Carteira: $<?php echo $balance; ?></p>
-    <!-- Adicione aqui a lógica e formulários para processamento de transações -->
-    <p><a href="login.php">Sair</a></p>
+<div class="page">
+        <form method="POST" class="formIndex">
+        <h1>Painel de Controle</h1>
+        <p>Bem-vindo(a), <?php echo $username; ?>!</p>
+        <p>Saldo da Carteira: $<?php echo $balance; ?></p>
+        <!-- Adicione aqui a lógica e formulários para processamento de transações -->
+        <p><a href="login.php">Sair</a></p>
+        </form>
+    </div>
+    
 </body>
 </html>
