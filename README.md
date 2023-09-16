@@ -1,4 +1,4 @@
-# Sistema de Pagamento com Integração de API de Pagamento
+# Sistema de Pagamento com Integração de API
 
 ## Descrição
 Um sistema de pagamento que permite aos usuários realizarem transações financeiras, como compra de produtos ou serviços, utilizando uma API de pagamento (PayPal)
