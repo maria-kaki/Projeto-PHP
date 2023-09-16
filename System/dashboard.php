@@ -38,6 +38,6 @@ if ($result->num_rows === 1) {
     <p>Bem-vindo, <?php echo $username; ?>!</p>
     <p>Saldo da Carteira: $<?php echo $balance; ?></p>
     <!-- Adicione aqui a lógica e formulários para processamento de transações -->
-    <p><a href="logout.php">Sair</a></p>
+    <p><a href="login.php">Sair</a></p>
 </body>
 </html>
