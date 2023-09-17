@@ -49,10 +49,10 @@ if (isset($_POST["enviar"])) {
         header('Location: ' . $payment->getApprovalLink());
 
         // Salvar as informações do pagamento no banco de dados
-        $transactionId = /* ID da transação associada */;
+        $transactionId = /* ID da transação associada */
         $paypalPaymentId = $payment->getId();
         $paypalToken = $payment->getToken();
-        $paypalPayerId = /* ID do pagador retornado pelo PayPal */;
+        $paypalPayerId = /* ID do pagador retornado pelo PayPal */
 
         $insertPaymentSQL = "INSERT INTO payments (transaction_id, payment_status, paypal_payment_id, paypal_token, paypal_payer_id) VALUES (?, 'Pending Payment', ?, ?, ?)";
         $stmt = $conn->prepare($insertPaymentSQL);
