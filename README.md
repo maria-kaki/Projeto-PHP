@@ -23,13 +23,11 @@ Os usuários podem se cadastrar e fazer login em suas contas.
 Os usuários devem ter uma carteira virtual onde possam fazer transações ou visualizar seu saldo atual.
 
 ### Integração com API de Pagamento
-Possui integração com Paypal para permitir pagamentos seguros e transações financeiras. (Existem formas mais elaboradas para adicionar essa funcionalidade)
+Possui integração com Paypal para permitir transações financeiras.
+
 
 ### Histórico de Transações
 Há salvo um registro de todas as transações realizadas, incluindo detalhes como valor, data, tipo de transação, etc.
-
-### Notificações por Email
-Envia confirmações de transações bem-sucedidas por e-mail para os usuários.
 
 ### Painel de Administração
 No painel de administração é possível gerenciar usuários e revisar transações.
@@ -38,13 +36,15 @@ No painel de administração é possível gerenciar usuários e revisar transaç
 Há autenticação segura, proteção contra injeções de SQL, criptografia e proteção outros ataques comuns.
 
 ## Tecnologias e SDKs Utilizados
-Utilização de PHP no backend.
+Utilização de PHP no backend (utilizei o MAMP para APACHE e PHP, além do composer).
 
 Utilização de HTML e CSS no frontend.
 
 Utilização de PayPal SDK para a API de pagamento.
 
-Utilização de MySQL para o banco de dados.
+Utilização de MySQL para o banco de dados (utilizei o MySQL Workbench com a porta 3306)..
+
+#### NOTA: no codigo, cada usuário cadastrado é registrado com 1000 reais na conta para teste, é possível integrar no código uma alteração para isso.
 
 ## Benefícios do Projeto:
 Demonstração de habilidades de integração de API.
