@@ -8,7 +8,8 @@ CREATE TABLE users (
     username VARCHAR(50) NOT NULL,
     password VARCHAR(255) NOT NULL,  -- Be sure to securely store passwords using cryptographic hashes
     email VARCHAR(100) UNIQUE NOT NULL,
-    balance DECIMAL(10, 2) DEFAULT 0.00  -- User's wallet balance
+    balance DECIMAL(10, 2) DEFAULT 0.00,
+    clientid VARCHAR(255) NOT NULL
 );
 
 -- Transactions Table

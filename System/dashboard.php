@@ -10,8 +10,8 @@ if (!isset($_SESSION["user_id"])) {
 // Recuperar informações do usuário
 $user_id = $_SESSION["user_id"];
 
-// Consulta ao banco de dados para recuperar o nome do usuário e o saldo da carteira
-$stmt = $conn->prepare("SELECT username, balance FROM users WHERE user_id = ?");
+// Consulta ao banco de dados para recuperar o nome do usuário, id do cliente e o saldo da carteira
+$stmt = $conn->prepare("SELECT username, balance, clientid FROM users WHERE user_id = ?");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -19,6 +19,7 @@ $result = $stmt->get_result();
 if ($result->num_rows === 1) {
     $row = $result->fetch_assoc();
     $username = $row["username"];
+    $clientid = $row["clientid"];
     $balance = $row["balance"];
 } else {
     header("Location: login.php");
@@ -48,7 +49,8 @@ if (isset($_POST["payment"])) {
         <form method="POST" class="formIndex">
         <h1>Painel de Controle</h1>
         <p>Bem-vindo(a), <?php echo $username; ?>!</p>
-        <p>Saldo da Carteira: $<?php echo $balance; ?></p>
+        <p>ID do cliente: <?php echo $clientid; ?></p>
+        <p>Saldo da Carteira: R$<?php echo $balance; ?></p>
         <input type="submit" name="payment" value="Fazer Pagamento" class="btn" />
         <input type="submit" name="close" value="Sair" class="btn" />
         </form>

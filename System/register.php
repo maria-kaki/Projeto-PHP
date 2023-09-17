@@ -21,8 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Este email já está registrado.";
         } else {
             // Insere o novo usuário no banco de dados
-            $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
-            $stmt->bind_param("sss", $name, $email, $password);
+            $stmt = $conn->prepare("INSERT INTO users (username, email, password, clientid) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("ssss", $name, $email, $password, $clientid);
 
             if ($stmt->execute()) {
                 session_start(); // Inicia a sessão
@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label for="password">Senha</label>
             <input type="password" name="password" placeholder="Digite sua senha" />
             <label for="clientid" class="form_label">ID do cliente</label>
-            <input type="text" name="secretkey" class="form_input" id="secretkey" placeholder="Chave secreta" required>
+            <input type="text" name="clientid" class="form_input" id="clientid" placeholder="ID do cliente" required>
             <input type="submit" value="Registrar" class="btn" />
             <div class="login-button">
                 <p>Já tem uma conta? <a href="login.php">Faça login aqui</a></p>
