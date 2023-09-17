@@ -1,5 +1,16 @@
 # Sistema de Pagamento com Integração de API
 
+###### Aviso Importante
+Eu não tinha saldo no PayPal para testar essa parte da aplicação, portanto é possivel ececutar através do admin e da manipulação do Banco de Dados pelo Workbench. Fiz código para envio de e-mail automático, mas os dados do meu e-mail estavam como remetente então foi necessário tirar.
+
+Ao criar o banco de dados no workbench, escolha a porta de execução do MySQL e altere no config.php se a porta for diferente.
+
+Execute o APACHE e o MySQL (utilizei o MAMP ou o XAMPP). Configure a porta para o mesmo número.
+
+Versão do PHP: 8.0.1 (aparece no MAMP)
+
+É necessário ter o PayPal REST API SDK baixado
+
 ## Descrição
 Um sistema de pagamento que permite aos usuários realizarem transações financeiras, como compra de produtos ou serviços, utilizando uma API de pagamento (PayPal)
 
