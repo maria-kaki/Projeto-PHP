@@ -36,6 +36,11 @@ if (isset($_POST["payment"])) {
     header("Location: paypal.php");
     exit;
 }
+// Verificar se o botão "Histórico de Pagamento" foi clicado
+if (isset($_POST["historypayment"])) {
+    header("Location: historypayment.php");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -52,6 +57,7 @@ if (isset($_POST["payment"])) {
         <p>ID do cliente: <?php echo $clientid; ?></p>
         <p>Saldo da Carteira: R$<?php echo $balance; ?></p>
         <input type="submit" name="payment" value="Fazer Pagamento" class="btn" />
+        <input type="submit" name="historypayment" value="Histórico de Pagamento" class="btn" />
         <input type="submit" name="close" value="Sair" class="btn" />
         </form>
     </div>

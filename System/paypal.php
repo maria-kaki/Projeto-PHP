@@ -26,54 +26,51 @@ if (isset($_POST["enviar"])) {
         // Configurar o ambiente do PayPal
         $apiContext = new \PayPal\Rest\ApiContext(
             new \PayPal\Auth\OAuthTokenCredential(
-                $clientid,     // Substitua pelo seu clientid
-                $privateKey    // Substitua pela sua chave privada
+                $clientid,
+                $privateKey
             )
         );
-
-        // Restante do código para criar o pagamento e redirecionar o usuário para o PayPal
-        // ...
+        // Criar um objeto de pagamento
+        $payment = new \PayPal\Api\Payment();
+        $payment->setIntent('sale')
+                ->setPayer(new \PayPal\Api\Payer(['payment_method' => 'paypal']))
+                ->setTransactions([
+                    (new \PayPal\Api\Transaction())
+                        ->setAmount(new \PayPal\Api\Amount([
+                            'total' => $paymentAmount,
+                            'currency' => $currency
+                        ]))
+                        ->setDescription($description)
+                ])
+                ->setRedirectUrls(new \PayPal\Api\RedirectUrls([
+                    'return_url' => 'http://localhost/System/historypayment.php',
+                    'cancel_url' => 'http://localhost/System/dashboard.php'
+                ]));
+    
+        try {
+            // Criar o pagamento no PayPal
+            $payment->create($apiContext);
+    
+            // Direcionar o usuário para a URL de aprovação do PayPal
+            header('Location: ' . $payment->getApprovalLink());
+    
+            // Salvar as informações do pagamento no banco de dados
+            $paypalPaymentId = $payment->getId();
+            $paypalToken = $payment->getToken();
+            $paypalPayerId = /* ID do pagador retornado pelo PayPal */
+    
+            $insertPaymentSQL = "INSERT INTO payments (transaction_id, payment_status, paypal_payment_id, paypal_token, paypal_payer_id) VALUES (?, 'Pending Payment', ?, ?, ?)";
+            $stmt = $conn->prepare($insertPaymentSQL);
+            $stmt->bind_param("issi", $transactionId, $paypalPaymentId, $paypalToken, $paypalPayerId);
+            $stmt->execute();
+    
+        } catch (\PayPal\Exception\PayPalConnectionException $ex) {
+            echo "Erro ao criar o pagamento: " . $ex->getMessage();
+        }
     } else {
         echo "ID do Cliente não encontrado.";
     }
-    // Criar um objeto de pagamento
-    $payment = new \PayPal\Api\Payment();
-    $payment->setIntent('sale')
-            ->setPayer(new \PayPal\Api\Payer(['payment_method' => 'paypal']))
-            ->setTransactions([
-                (new \PayPal\Api\Transaction())
-                    ->setAmount(new \PayPal\Api\Amount([
-                        'total' => $paymentAmount,
-                        'currency' => $currency
-                    ]))
-                    ->setDescription($description)
-            ])
-            ->setRedirectUrls(new \PayPal\Api\RedirectUrls([
-                'return_url' => 'http://seusite.com/success',
-                'cancel_url' => 'http://seusite.com/cancel'
-            ]));
-
-    try {
-        // Criar o pagamento no PayPal
-        $payment->create($apiContext);
-
-        // Direcionar o usuário para a URL de aprovação do PayPal
-        header('Location: ' . $payment->getApprovalLink());
-
-        // Salvar as informações do pagamento no banco de dados
-        $transactionId = /* ID da transação associada */
-        $paypalPaymentId = $payment->getId();
-        $paypalToken = $payment->getToken();
-        $paypalPayerId = /* ID do pagador retornado pelo PayPal */
-
-        $insertPaymentSQL = "INSERT INTO payments (transaction_id, payment_status, paypal_payment_id, paypal_token, paypal_payer_id) VALUES (?, 'Pending Payment', ?, ?, ?)";
-        $stmt = $conn->prepare($insertPaymentSQL);
-        $stmt->bind_param("issi", $transactionId, $paypalPaymentId, $paypalToken, $paypalPayerId);
-        $stmt->execute();
-
-    } catch (\PayPal\Exception\PayPalConnectionException $ex) {
-        echo "Erro ao criar o pagamento: " . $ex->getMessage();
-    }
+    
 }
 
 ?>
