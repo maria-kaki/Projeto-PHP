@@ -51,7 +51,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p>Digite os seus dados de acesso nos campos abaixo.</p>
             <input type="email" name="email" placeholder="Digite seu e-mail" autofocus="true" />
             <input type="password" name="password" placeholder="Digite sua senha" />
-            <a href="forgot_password.php">Esqueci minha senha</a>
             <input type="submit" value="Acessar" class="btn" />
             <div class="register-button">
                 <p>Não tem uma conta? <a href="register.php">Crie uma aqui</a></p>

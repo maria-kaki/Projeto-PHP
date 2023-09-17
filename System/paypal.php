@@ -11,19 +11,31 @@ if (isset($_POST["close"])) {
 
 // Verificar se o botão "Enviar Pagamento" foi clicado
 if (isset($_POST["enviar"])) {
-    // Configurar o ambiente do PayPal
-    $apiContext = new \PayPal\Rest\ApiContext(
-        new \PayPal\Auth\OAuthTokenCredential(
-            'seu_client_id',
-            'sua_secret'
-        )
-    );
+    // Coletar os valores do formulário
+    $amount = $_POST["amount"];
+    $clientid = $_POST["clientid"];
+    $privateKey = $_POST["private_key"];
 
-    // Substitua as informações de pagamento abaixo com as informações relevantes
-    $paymentAmount = '10.00'; // Valor do pagamento
-    $currency = 'USD'; // Moeda da transação
-    $description = 'Descrição da compra'; // Descrição da transação
+    // Verificar se o clientid existe no banco de dados
+    $stmt = $conn->prepare("SELECT * FROM users WHERE clientid = ?");
+    $stmt->bind_param("s", $clientid);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
+    if ($result->num_rows > 0) {
+        // Configurar o ambiente do PayPal
+        $apiContext = new \PayPal\Rest\ApiContext(
+            new \PayPal\Auth\OAuthTokenCredential(
+                $clientid,     // Substitua pelo seu clientid
+                $privateKey    // Substitua pela sua chave privada
+            )
+        );
+
+        // Restante do código para criar o pagamento e redirecionar o usuário para o PayPal
+        // ...
+    } else {
+        echo "ID do Cliente não encontrado.";
+    }
     // Criar um objeto de pagamento
     $payment = new \PayPal\Api\Payment();
     $payment->setIntent('sale')
@@ -73,14 +85,21 @@ if (isset($_POST["enviar"])) {
 </head>
 <body>
 <div class="page">
-        <form method="POST" class="formIndex">
+    <form method="POST" class="formIndex">
         <h1>Realizar Pagamento</h1>
         <p>Digite os dados abaixo para enviar o pagamento.</p>
-            <label for="name" class="form_label">Nome</label>
-            <input type="text" name="name" class="form_input" id="name" placeholder="Nome" required>
+        <label for="amount" class="form_label">Valor que deseja transferir</label>
+        <input type="text" name="amount" class="form_input" id="amount" placeholder="Valor" required>
+
+        <label for="clientid" class="form_label">ID do Cliente</label>
+        <input type="text" name="clientid" class="form_input" id="clientid" placeholder="ID do Cliente" required>
+
+        <label for="private_key" class="form_label">Chave Privada</label>
+        <input type="text" name="private_key" class="form_input" id="private_key" placeholder="Chave Privada" required>
+
         <input type="submit" name="enviar" value="Enviar Pagamento" class="btn" />
         <input type="submit" name="close" value="Sair" class="btn" />
-        </form>
-    </div>
+    </form>
+</div>
 </body>
 </html>
