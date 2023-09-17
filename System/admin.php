@@ -1,7 +1,19 @@
 <?php
 // Incluir arquivos necessários e estabelecer conexão com o banco de dados
 require_once("config.php");
-require_once("functions.php"); // Funções auxiliares, como verificar a sessão de administrador
+
+// Função para verificar se o usuário é um administrador com base no e-mail
+function isAdmin($email) {
+    $adminEmail = 'maria.oliveira170922@gmail.com';
+    return ($email === $adminEmail);
+}
+
+// Verificar se o usuário está autenticado como administrador
+if (!isset($_SESSION["email"]) || !isAdmin($_SESSION["email"])) {
+    // Redirecionar para a página de login se o usuário não for um administrador
+    header("Location: login.php");
+    exit;
+}
 
 // Função para listar usuários
 function listUsers() {
