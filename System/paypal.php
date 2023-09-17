@@ -1,14 +1,6 @@
 <?php
 require_once("config.php");
 require 'vendor/autoload.php';
-
-// Verificar se o botão "Sair" foi clicado
-if (isset($_POST["close"])) {
-    session_destroy();
-    header("Location: login.php");
-    exit;
-}
-
 // Verificar se o botão "Enviar Pagamento" foi clicado
 if (isset($_POST["enviar"])) {
     // Coletar os valores do formulário
@@ -70,9 +62,14 @@ if (isset($_POST["enviar"])) {
     } else {
         echo "ID do Cliente não encontrado.";
     }
-    
 }
 
+// Verificar se o botão "Sair" foi clicado
+if (isset($_POST["close"])) {
+    session_destroy();
+    header("Location: login.php");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html>
