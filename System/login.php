@@ -42,17 +42,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/index.css">
 </head>
 <body>
     <div class="page">
-        <form method="POST" class="formLogin">
+        <form method="POST" class="formIndex">
             <h1>Login</h1>
             <p>Digite os seus dados de acesso nos campos abaixo.</p>
             <input type="email" name="email" placeholder="Digite seu e-mail" autofocus="true" />
             <input type="password" name="password" placeholder="Digite sua senha" />
-            <a href="/">Esqueci minha senha</a>
             <input type="submit" value="Acessar" class="btn" />
+            <div class="register-button">
+                <p>Não tem uma conta? <a href="register.php">Crie uma aqui</a></p>
+            </div>
         </form>
     </div>
 </body>
