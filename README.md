@@ -24,13 +24,15 @@ No painel de administração é possível gerenciar usuários, revisar transaç�
 Há autenticação segura, proteção contra injeções de SQL, criptografia e proteção outros ataques comuns.
 
 ## Tecnologias e SDKs Utilizados
-Utilização de PHP no backend.
+Utilização de PHP no backend (utilizei o MAMP para APACHE e PHP, além do composer).
 
 Utilização de HTML e CSS no frontend.
 
 Utilização de PayPal SDK para a API de pagamento.
 
-Utilização de MySQL para o banco de dados.
+Utilização de MySQL para o banco de dados (utilizei o MySQL Workbench com a porta 3306)..
+
+#### NOTA: no codigo, cada usuário cadastrado é registrado com 1000 reais na conta para teste, é possível integrar no código uma alteração para isso.
 
 ## Benefícios do Projeto:
 Demonstração de habilidades de integração de API.
