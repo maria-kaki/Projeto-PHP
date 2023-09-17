@@ -3,24 +3,16 @@
 ## Descrição
 Um sistema de pagamento que permite aos usuários realizarem transações financeiras, como compra de produtos ou serviços, utilizando uma API de pagamento (PayPal)
 
-## Estrutura de Pastas:
-index.php: Página inicial que inclui as páginas de registro, login e dashboard.
-register.php: Página de registro de novos usuários.
-login.php: Página de login de usuários.
-dashboard.php: Página de gerenciamento da carteira e processamento de transações.
-config.php: Arquivo de configuração do banco de dados e API de pagamento.
-paypal_config.php: Arquivo de configuração das credenciais do PayPal.
-
 ## Recursos e Funcionalidades
 
 ### Autenticação de Usuários
 Os usuários podem se cadastrar e fazer login em suas contas.
 
 ### Gestão de Carteira Virtual
-Os usuários devem ter uma carteira virtual onde possam adicionar fundos ou visualizar seu saldo atual.
+Os usuários devem ter uma carteira virtual onde possam fazer transações ou visualizar seu saldo atual.
 
 ### Integração com API de Pagamento
-Possui integração com Paypal para permitir pagamentos seguros e transações financeiras.
+Possui integração com Paypal para permitir pagamentos seguros e transações financeiras. (Existem formas mais elaboradas para adicionar essa funcionalidade)
 
 ### Histórico de Transações
 Há salvo um registro de todas as transações realizadas, incluindo detalhes como valor, data, tipo de transação, etc.
