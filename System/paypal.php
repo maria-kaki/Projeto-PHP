@@ -1,6 +1,7 @@
 <?php
 require_once("config.php");
 require 'vendor/autoload.php';
+
 // Verificar se o botão "Enviar Pagamento" foi clicado
 if (isset($_POST["enviar"])) {
     // Coletar os valores do formulário
@@ -22,6 +23,21 @@ if (isset($_POST["enviar"])) {
                 $privateKey
             )
         );
+        // Desabilitar a verificação do certificado SSL (APENAS PARA DESENVOLVIMENTO)
+        $apiContext->setConfig(
+            array(
+                'http.ConnectionTimeOut' => 30,
+                'http.Retry' => 1,
+                'http.CURLOPT_SSL_VERIFYPEER' => false,  // Desabilitar a verificação do certificado SSL
+                'http.CURLOPT_SSL_VERIFYHOST' => 0,
+            )
+        );
+        
+        // Substitua as informações de pagamento abaixo com as informações relevantes
+        $paymentAmount = $amount; // Valor do pagamento
+        $currency = 'BRL'; // Moeda da transação
+        $description = 'Descrição da compra'; // Descrição da transação
+
         // Criar um objeto de pagamento
         $payment = new \PayPal\Api\Payment();
         $payment->setIntent('sale')
@@ -38,30 +54,38 @@ if (isset($_POST["enviar"])) {
                     'return_url' => 'http://localhost/System/historypayment.php',
                     'cancel_url' => 'http://localhost/System/dashboard.php'
                 ]));
-    
-        try {
-            // Criar o pagamento no PayPal
-            $payment->create($apiContext);
-    
-            // Direcionar o usuário para a URL de aprovação do PayPal
-            header('Location: ' . $payment->getApprovalLink());
-    
-            // Salvar as informações do pagamento no banco de dados
-            $paypalPaymentId = $payment->getId();
-            $paypalToken = $payment->getToken();
-            $paypalPayerId = /* ID do pagador retornado pelo PayPal */
-    
-            $insertPaymentSQL = "INSERT INTO payments (transaction_id, payment_status, paypal_payment_id, paypal_token, paypal_payer_id) VALUES (?, 'Pending Payment', ?, ?, ?)";
-            $stmt = $conn->prepare($insertPaymentSQL);
-            $stmt->bind_param("issi", $transactionId, $paypalPaymentId, $paypalToken, $paypalPayerId);
-            $stmt->execute();
-    
-        } catch (\PayPal\Exception\PayPalConnectionException $ex) {
-            echo "Erro ao criar o pagamento: " . $ex->getMessage();
-        }
-    } else {
-        echo "ID do Cliente não encontrado.";
-    }
+
+                try {
+                    // Criar o pagamento no PayPal
+                    $payment->create($apiContext);
+                
+                    // Salvar as informações do pagamento no banco de dados
+                    $paypalPaymentId = $payment->getId();
+                    $paypalToken = $payment->getToken();
+                    $paypalPayerId = /* ID do pagador retornado pelo PayPal */
+                
+                    // Insert a record into the transactions table
+                    $insertTransactionSQL = "INSERT INTO transactions (user_id, amount, description) VALUES (?, ?, ?)";
+                    $stmt = $conn->prepare($insertTransactionSQL);
+                    $stmt->bind_param("ids", $userId, $paymentAmount, $description);
+                    $stmt->execute();
+                
+                    // Get the last inserted transaction ID
+                    $transactionId = $stmt->insert_id;
+                
+                    // Insert a record into the payments table
+                    $insertPaymentSQL = "INSERT INTO payments (transaction_id, payment_status, paypal_payment_id, paypal_token, paypal_payer_id) VALUES (?, 'Pending Payment', ?, ?, ?)";
+                    $stmt = $conn->prepare($insertPaymentSQL);
+                    $stmt->bind_param("issi", $transactionId, $paypalPaymentId, $paypalToken, $paypalPayerId);
+                    $stmt->execute();
+                
+                    // Direcionar o usuário para a URL de aprovação do PayPal
+                    header('Location: ' . $payment->getApprovalLink());
+                
+                } catch (\PayPal\Exception\PayPalConnectionException $ex) {
+                    echo "Erro ao criar o pagamento: " . $ex->getMessage();
+                }
+            }   
 }
 
 // Verificar se o botão "Sair" foi clicado
