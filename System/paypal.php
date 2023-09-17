@@ -29,7 +29,7 @@ if (isset($_POST["enviar"])) {
             )
         );
 
-        // Substitua as informações de pagamento abaixo com as informações relevantes
+        // Todas essas informações devem ser pedidas ao usuario mas para testes eu especifiquei
         $paymentAmount = $amount; // Valor do pagamento
         $currency = 'BRL'; // Moeda da transação
         $description = 'Descrição da compra'; // Descrição da transação
