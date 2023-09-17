@@ -7,32 +7,28 @@ if (isset($_POST["enviar"])) {
     // Coletar os valores do formulário
     $amount = $_POST["amount"];
     $clientid = $_POST["clientid"];
-    $privateKey = $_POST["private_key"];
+    $secretKey = $_POST["secretkey"];
+    $recipientEmail = $_POST["emaildestino"];
 
-    // Verificar se o clientid existe no banco de dados
-    $stmt = $conn->prepare("SELECT * FROM users WHERE clientid = ?");
-    $stmt->bind_param("s", $clientid);
+    // Verificar se o email de destino existe no banco de dados
+    $stmt = $conn->prepare("SELECT user_id FROM users WHERE email = ?");
+    $stmt->bind_param("s", $recipientEmail);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
+        // Fetch the user_id from the query result
+        $row = $result->fetch_assoc();
+        $userId = $row["user_id"];
+
         // Configurar o ambiente do PayPal
         $apiContext = new \PayPal\Rest\ApiContext(
             new \PayPal\Auth\OAuthTokenCredential(
                 $clientid,
-                $privateKey
+                $secretKey
             )
         );
-        // Desabilitar a verificação do certificado SSL (APENAS PARA DESENVOLVIMENTO)
-        $apiContext->setConfig(
-            array(
-                'http.ConnectionTimeOut' => 30,
-                'http.Retry' => 1,
-                'http.CURLOPT_SSL_VERIFYPEER' => false,  // Desabilitar a verificação do certificado SSL
-                'http.CURLOPT_SSL_VERIFYHOST' => 0,
-            )
-        );
-        
+
         // Substitua as informações de pagamento abaixo com as informações relevantes
         $paymentAmount = $amount; // Valor do pagamento
         $currency = 'BRL'; // Moeda da transação
@@ -55,37 +51,38 @@ if (isset($_POST["enviar"])) {
                     'cancel_url' => 'http://localhost/System/dashboard.php'
                 ]));
 
-                try {
-                    // Criar o pagamento no PayPal
-                    $payment->create($apiContext);
-                
-                    // Salvar as informações do pagamento no banco de dados
-                    $paypalPaymentId = $payment->getId();
-                    $paypalToken = $payment->getToken();
-                    $paypalPayerId = /* ID do pagador retornado pelo PayPal */
-                
-                    // Insert a record into the transactions table
-                    $insertTransactionSQL = "INSERT INTO transactions (user_id, amount, description) VALUES (?, ?, ?)";
-                    $stmt = $conn->prepare($insertTransactionSQL);
-                    $stmt->bind_param("ids", $userId, $paymentAmount, $description);
-                    $stmt->execute();
-                
-                    // Get the last inserted transaction ID
-                    $transactionId = $stmt->insert_id;
-                
-                    // Insert a record into the payments table
-                    $insertPaymentSQL = "INSERT INTO payments (transaction_id, payment_status, paypal_payment_id, paypal_token, paypal_payer_id) VALUES (?, 'Pending Payment', ?, ?, ?)";
-                    $stmt = $conn->prepare($insertPaymentSQL);
-                    $stmt->bind_param("issi", $transactionId, $paypalPaymentId, $paypalToken, $paypalPayerId);
-                    $stmt->execute();
-                
-                    // Direcionar o usuário para a URL de aprovação do PayPal
-                    header('Location: ' . $payment->getApprovalLink());
-                
-                } catch (\PayPal\Exception\PayPalConnectionException $ex) {
-                    echo "Erro ao criar o pagamento: " . $ex->getMessage();
-                }
-            }   
+        try {
+            // Criar o pagamento no PayPal
+            $payment->create($apiContext);
+
+            // Salvar as informações do pagamento no banco de dados
+            $paypalPaymentId = $payment->getId();
+            $paypalToken = $payment->getToken();
+
+            // Inserir um registro na tabela de transações
+            $insertTransactionSQL = "INSERT INTO transactions (user_id, amount, description) VALUES (?, ?, ?)";
+            $stmt = $conn->prepare($insertTransactionSQL);
+            $stmt->bind_param("ids", $userId, $paymentAmount, $description);
+            $stmt->execute();
+
+            // Obter o último ID de transação inserido
+            $transactionId = $stmt->insert_id;
+
+            // Inserir um registro na tabela de pagamentos
+            $insertPaymentSQL = "INSERT INTO payments (transaction_id, payment_status, paypal_payment_id, paypal_token, paypal_payer_id) VALUES (?, 'Pending Payment', ?, ?, ?)";
+            $stmt = $conn->prepare($insertPaymentSQL);
+            $stmt->bind_param("issi", $transactionId, $paypalPaymentId, $paypalToken, $paypalPayerId);
+            $stmt->execute();
+
+            // Direcionar o usuário para a URL de aprovação do PayPal
+            header('Location: ' . $payment->getApprovalLink());
+
+        } catch (\PayPal\Exception\PayPalConnectionException $ex) {
+            echo "Erro ao criar o pagamento: " . $ex->getMessage();
+        }
+    } else {
+        echo "E-mail de destino não encontrado no banco de dados.";
+    }
 }
 
 // Verificar se o botão "Sair" foi clicado
@@ -109,11 +106,14 @@ if (isset($_POST["close"])) {
         <label for="amount" class="form_label">Valor que deseja transferir</label>
         <input type="text" name="amount" class="form_input" id="amount" placeholder="Valor" required>
 
-        <label for="clientid" class="form_label">ID do Cliente</label>
-        <input type="text" name="clientid" class="form_input" id="clientid" placeholder="ID do Cliente" required>
+        <label for="clientid" class="form_label">Client ID</label>
+        <input type="text" name="clientid" class="form_input" id="clientid" placeholder="Client ID" required>
 
-        <label for="private_key" class="form_label">Chave Privada</label>
-        <input type="text" name="private_key" class="form_input" id="private_key" placeholder="Chave Privada" required>
+        <label for="secretkey" class="form_label">Secret Key</label>
+        <input type="text" name="secretkey" class="form_input" id="secretkey" placeholder="Secret Key" required>
+
+        <label for="emaildestino" class="form_label">E-mail de Destino</label>
+        <input type="email" name="emaildestino" class="form_input" id="emaildestino" placeholder="E-mail de Destino" required>
 
         <input type="submit" name="enviar" value="Enviar Pagamento" class="btn" />
         <input type="submit" name="close" value="Sair" class="btn" />
