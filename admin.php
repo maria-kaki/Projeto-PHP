@@ -3,12 +3,6 @@
 require_once("config.php");
 require_once("functions.php"); // Funções auxiliares, como verificar a sessão de administrador
 
-// Verificar se o usuário está logado como administrador
-if (!isAdminLoggedIn()) {
-    header("Location: login.php"); // Redirecionar para a página de login
-    exit;
-}
-
 // Função para listar usuários
 function listUsers() {
     global $conn;
