@@ -79,11 +79,6 @@ if (isset($_POST["close"])) {
         <h2>Revisar Transações</h2>
         <?php listTransactions(); ?>
     </div>
-
-    <div>
-        <h2>Gerar Relatórios</h2>
-        <!-- Adicione a lógica para gerar relatórios aqui -->
-    </div>
     
     <input type="submit" name="close" value="Sair" class="btn" />
 
