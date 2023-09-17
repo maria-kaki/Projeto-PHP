@@ -41,6 +41,12 @@ if (isset($_POST["historypayment"])) {
     header("Location: historypayment.php");
     exit;
 }
+
+// Manda para a administração
+if (isset($_POST["admin"])) {
+    header("Location: admin.php");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -58,6 +64,7 @@ if (isset($_POST["historypayment"])) {
         <p>Saldo da Carteira: R$<?php echo $balance; ?></p>
         <input type="submit" name="payment" value="Fazer Pagamento" class="btn" />
         <input type="submit" name="historypayment" value="Histórico de Pagamento" class="btn" />
+        <input type="submit" name="admin" value="Administração" class="btn" />
         <input type="submit" name="close" value="Sair" class="btn" />
         </form>
     </div>

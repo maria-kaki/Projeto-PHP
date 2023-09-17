@@ -21,7 +21,7 @@ Há salvo um registro de todas as transações realizadas, incluindo detalhes co
 Envia confirmações de transações bem-sucedidas por e-mail para os usuários.
 
 ### Painel de Administração
-No painel de administração é possível gerenciar usuários, revisar transações e gerar relatórios.
+No painel de administração é possível gerenciar usuários e revisar transações.
 
 ### Segurança
 Há autenticação segura, proteção contra injeções de SQL, criptografia e proteção outros ataques comuns.
@@ -29,7 +29,7 @@ Há autenticação segura, proteção contra injeções de SQL, criptografia e p
 ## Tecnologias e SDKs Utilizados
 Utilização de PHP no backend.
 
-Utilização de HTML, CSS e JavaScript no frontend.
+Utilização de HTML e CSS no frontend.
 
 Utilização de PayPal SDK para a API de pagamento.
 

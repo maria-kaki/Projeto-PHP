@@ -77,6 +77,17 @@ if (isset($_POST["enviar"])) {
             // Direcionar o usuário para a URL de aprovação do PayPal
             header('Location: ' . $payment->getApprovalLink());
 
+            // Enviar um email de confirmação para o cliente
+            $to = $recipientEmail;
+            $subject = 'Confirmação de Pagamento';
+            $message = 'Seu pagamento foi processado com sucesso.';
+            $headers = 'From: maria.oliveira170922@gmail.com' . "\r\n" .
+                    'Reply-To: seuemail@dominio.com' . "\r\n" .
+                    'X-Mailer: PHP/' . phpversion();
+
+            mail($to, $subject, $message, $headers);
+
+
         } catch (\PayPal\Exception\PayPalConnectionException $ex) {
             echo "Erro ao criar o pagamento: " . $ex->getMessage();
         }
