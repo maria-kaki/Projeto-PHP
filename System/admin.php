@@ -2,17 +2,11 @@
 // Incluir arquivos necessários e estabelecer conexão com o banco de dados
 require_once("config.php");
 
+
 // Função para verificar se o usuário é um administrador com base no e-mail
 function isAdmin($email) {
     $adminEmail = 'maria.oliveira170922@gmail.com';
     return ($email === $adminEmail);
-}
-
-// Verificar se o usuário está autenticado como administrador
-if (!isset($_SESSION["email"]) || !isAdmin($_SESSION["email"])) {
-    // Redirecionar para a página de login se o usuário não for um administrador
-    header("Location: login.php");
-    exit;
 }
 
 // Função para listar usuários
@@ -77,6 +71,7 @@ if (isset($_POST["close"])) {
 <!DOCTYPE html>
 <html>
 <head>
+     <link rel="stylesheet" href="style/index.css">
     <title>Painel de Administração</title>
 </head>
 <body>
