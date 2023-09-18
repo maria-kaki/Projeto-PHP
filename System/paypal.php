@@ -4,11 +4,11 @@ require 'vendor/autoload.php';
 
 // Verificar se o botão "Enviar Pagamento" foi clicado
 if (isset($_POST["enviar"])) {
-    // Coletar os valores do formulário
-    $amount = $_POST["amount"];
-    $clientid = $_POST["clientid"];
-    $secretKey = $_POST["secretkey"];
-    $recipientEmail = $_POST["emaildestino"];
+    // Coletar e sanitizar os valores do formulário
+    $amount = mysqli_real_escape_string($conn, $_POST["amount"]);
+    $clientid = mysqli_real_escape_string($conn, $_POST["clientid"]);
+    $secretKey = mysqli_real_escape_string($conn, $_POST["secretkey"]);
+    $recipientEmail = mysqli_real_escape_string($conn, $_POST["emaildestino"]);
 
     // Verificar se o email de destino existe no banco de dados
     $stmt = $conn->prepare("SELECT user_id FROM users WHERE email = ?");
