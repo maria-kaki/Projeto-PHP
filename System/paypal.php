@@ -74,9 +74,9 @@ if (isset($_POST["enviar"])) {
             $stmt->bind_param("issi", $transactionId, $paypalPaymentId, $paypalToken, $paypalPayerId);
             $stmt->execute();
 
-            // Direcionar o usuário para a URL de aprovação do PayPal
-            header('Location: ' . $payment->getApprovalLink());
-
+            // Direcionar o usuário para a URL de aprovação do PayPal (HTTP)
+            header('Location: http://localhost/System/historypayment.php');
+            exit;
             // Enviar um email de confirmação para o cliente
             $to = $recipientEmail;
             $subject = 'Confirmação de Pagamento';
