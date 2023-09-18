@@ -75,19 +75,17 @@ if (isset($_POST["close"])) {
     <title>Painel de Administração</title>
 </head>
 <body>
+    <div class="page">
+    <form method="POST" class="formIndex">
     <h1>Painel de Administração</h1>
-    
-    <div>
         <h2>Gerenciar Usuários</h2>
         <?php listUsers(); ?>
-    </div>
 
-    <div>
         <h2>Revisar Transações</h2>
         <?php listTransactions(); ?>
-    </div>
     
     <input type="submit" name="close" value="Sair" class="btn" />
-
+</form>
+</div>
 </body>
 </html>
