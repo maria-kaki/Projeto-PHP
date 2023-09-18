@@ -1,7 +1,7 @@
 # Sistema de Pagamento com Integração de API
 
 ###### Aviso Importante
-Eu não tinha saldo no PayPal para testar essa parte da aplicação, portanto é possivel ececutar através do admin e da manipulação do Banco de Dados pelo Workbench. Fiz código para envio de e-mail automático, mas os dados do meu e-mail estavam como remetente então foi necessário tirar.
+Eu não coloquei saldo no PayPal, pelo código, para testar o envio do pagamento, inseri no banco de dados, portanto é possível executar através da manipulação do Banco de Dados pelo Workbench. Fiz código para envio de e-mail automático, mas os dados do meu e-mail estavam como remetente então foi necessário tirar.
 
 Ao criar o banco de dados no workbench, escolha a porta de execução do MySQL e altere no config.php se a porta for diferente.
 
