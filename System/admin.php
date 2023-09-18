@@ -1,7 +1,6 @@
 <?php
 // Incluir arquivos necessários e estabelecer conexão com o banco de dados
 require_once("config.php");
-require_once("functions.php"); // Funções auxiliares, como verificar a sessão de administrador
 
 // Função para listar usuários
 function listUsers() {
@@ -65,6 +64,7 @@ if (isset($_POST["close"])) {
 <!DOCTYPE html>
 <html>
 <head>
+     <link rel="stylesheet" href="style/index.css">
     <title>Painel de Administração</title>
 </head>
 <body>
