@@ -17,7 +17,7 @@ if (isset($_POST["enviar"])) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // Fetch the user_id from the query result
+        // Obtenha o user_id do resultado da consulta
         $row = $result->fetch_assoc();
         $userId = $row["user_id"];
 
