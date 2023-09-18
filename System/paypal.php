@@ -4,11 +4,11 @@ require 'vendor/autoload.php';
 
 // Verificar se o botão "Enviar Pagamento" foi clicado
 if (isset($_POST["enviar"])) {
-    // Coletar os valores do formulário
-    $amount = $_POST["amount"];
-    $clientid = $_POST["clientid"];
-    $secretKey = $_POST["secretkey"];
-    $recipientEmail = $_POST["emaildestino"];
+    // Coletar e sanitizar os valores do formulário
+    $amount = mysqli_real_escape_string($conn, $_POST["amount"]);
+    $clientid = mysqli_real_escape_string($conn, $_POST["clientid"]);
+    $secretKey = mysqli_real_escape_string($conn, $_POST["secretkey"]);
+    $recipientEmail = mysqli_real_escape_string($conn, $_POST["emaildestino"]);
 
     // Verificar se o email de destino existe no banco de dados
     $stmt = $conn->prepare("SELECT user_id FROM users WHERE email = ?");
@@ -17,7 +17,7 @@ if (isset($_POST["enviar"])) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // Fetch the user_id from the query result
+        // Obtenha o user_id do resultado da consulta
         $row = $result->fetch_assoc();
         $userId = $row["user_id"];
 
@@ -29,7 +29,7 @@ if (isset($_POST["enviar"])) {
             )
         );
 
-        // Substitua as informações de pagamento abaixo com as informações relevantes
+        // Todas essas informações devem ser pedidas ao usuario mas para testes eu especifiquei
         $paymentAmount = $amount; // Valor do pagamento
         $currency = 'BRL'; // Moeda da transação
         $description = 'Descrição da compra'; // Descrição da transação
@@ -82,7 +82,7 @@ if (isset($_POST["enviar"])) {
             $subject = 'Confirmação de Pagamento';
             $message = 'Seu pagamento foi processado com sucesso.';
             $headers = 'From: maria.oliveira170922@gmail.com' . "\r\n" .
-                    'Reply-To: seuemail@dominio.com' . "\r\n" .
+                    'Reply-To: maria.oliveira170922@gmail.com' . "\r\n" .
                     'X-Mailer: PHP/' . phpversion();
 
             mail($to, $subject, $message, $headers);

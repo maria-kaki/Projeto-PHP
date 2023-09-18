@@ -2,6 +2,13 @@
 // Incluir arquivos necessários e estabelecer conexão com o banco de dados
 require_once("config.php");
 
+
+// Função para verificar se o usuário é um administrador com base no e-mail
+function isAdmin($email) {
+    $adminEmail = 'maria.oliveira170922@gmail.com';
+    return ($email === $adminEmail);
+}
+
 // Função para listar usuários
 function listUsers() {
     global $conn;
@@ -78,11 +85,6 @@ if (isset($_POST["close"])) {
     <div>
         <h2>Revisar Transações</h2>
         <?php listTransactions(); ?>
-    </div>
-
-    <div>
-        <h2>Gerar Relatórios</h2>
-        <!-- Adicione a lógica para gerar relatórios aqui -->
     </div>
     
     <input type="submit" name="close" value="Sair" class="btn" />

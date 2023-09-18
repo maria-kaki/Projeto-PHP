@@ -3,6 +3,7 @@
 ###### Aviso Importante
 Eu não coloquei saldo no PayPal, pelo código, para testar o envio do pagamento, inseri no banco de dados, portanto é possível executar através da manipulação do Banco de Dados pelo Workbench. Fiz código para envio de e-mail automático, mas os dados do meu e-mail estavam como remetente então foi necessário tirar.
 
+
 Ao criar o banco de dados no workbench, escolha a porta de execução do MySQL e altere no config.php se a porta for diferente.
 
 Execute o APACHE e o MySQL (utilizei o MAMP ou o XAMPP). Configure a porta para o mesmo número.
