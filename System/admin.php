@@ -5,7 +5,7 @@ require_once("config.php");
 
 // Função para verificar se o usuário é um administrador com base no e-mail
 function isAdmin($email) {
-    $adminEmail = 'maria.oliveira170922@gmail.com';
+    $adminEmail = 'email@email.com';
     return ($email === $adminEmail);
 }
 
