@@ -81,8 +81,8 @@ if (isset($_POST["enviar"])) {
             $to = $recipientEmail;
             $subject = 'Confirmação de Pagamento';
             $message = 'Seu pagamento foi processado com sucesso.';
-            $headers = 'From: maria.oliveira170922@gmail.com' . "\r\n" .
-                    'Reply-To: maria.oliveira170922@gmail.com' . "\r\n" .
+            $headers = 'From: email@email.com' . "\r\n" .
+                    'Reply-To: email@email.com' . "\r\n" .
                     'X-Mailer: PHP/' . phpversion();
 
             mail($to, $subject, $message, $headers);
